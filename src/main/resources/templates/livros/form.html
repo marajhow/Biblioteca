@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout">
+<head>
+<meta charset="UTF-8" />
+<title>Insert title here</title>
+</head>
+<body>
+
+	<nav layout:fragment="header" aria-label="breadcrumb" role="navigation">
+	  <ol class="breadcrumb">
+	    <li class="breadcrumb-item"><a href="#" th:href="@{/livros/list}">Livros</a></li>
+	    <li class="breadcrumb-item active" aria-current="page">Novo Livro</li>
+	  </ol>
+	</nav>
+
+	<div layout:fragment="content" class="container">
+	
+	<div>
+		<img th:if="${livro.capa}" th:src="@{'/' + ${livro.capa}}" width="100px" />
+	</div>
+	
+
+	<form id="livroForm" th:action="@{/livros/gravar}" 
+		method="post" th:object="${livro}" action="#" enctype="multipart/form-data" >
+		
+		<input type="hidden"  th:field="*{id}" />
+		
+		<div>
+			<label for="pathCapa" >Capa do livro</label> 
+			<input type="file" name="capaUrl" />
+			<span th:if="${message}" style="color: red;" th:text="${message}">Message Error</span>
+		</div>
+		
+		
+		Título:<input type="text" th:field="*{nome}" />
+		<span  th:if="${#fields.hasErrors('nome')}" 
+			th:errors="*{nome}">Nome Error
+		</span>
+		<br/>
+		
+		Autor: <select th:field="*{autor}">
+			  	<option th:each="autor : ${autores}"  
+			  			th:value="${autor.id}" 
+			  			th:text="${autor.nome}">Nome do autor</option>
+			</select>
+		    </div>
+		
+		Total de Páginas: <input type="text" 
+			th:field="*{quantidadePaginas}" />
+			<span  th:if="${#fields.hasErrors('quantidadePaginas')}" 
+				th:errors="*{quantidadePaginas}">Quantidade de pagina Error
+			</span>
+			<br/>
+		<input type="submit" value="gravar" />
+	</form>
+	</div>
+</body>
+</html>
