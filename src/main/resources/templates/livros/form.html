@@ -22,7 +22,7 @@
 	
 
 	<form id="livroForm" th:action="@{/livros/gravar}" 
-		method="post" th:object="${livro}" action="#" enctype="multipart/form-data" >
+	method="post" th:object="${livro}" action="#" enctype="multipart/form-data" >
 		
 		<input type="hidden"  th:field="*{id}" />
 		
